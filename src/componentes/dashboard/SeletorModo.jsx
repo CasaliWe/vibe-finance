@@ -1,4 +1,3 @@
-
 import { useContas } from '../../contextos/ContasContext';
 import { Button } from '@/components/ui/button';
 import { Calendar, CalendarDays } from 'lucide-react';
@@ -9,16 +8,6 @@ function SeletorModo() {
   return (
     <div className="flex gap-2">
       <Button
-        variant={modoVisualizacao === 'sexta' ? 'default' : 'outline'}
-        size="sm"
-        onClick={() => setModoVisualizacao('sexta')}
-        className={`flex items-center gap-2 px-4 py-2 ${modoVisualizacao === 'sexta' ? 'bg-vibe-purple hover:bg-vibe-purple-dark' : ''}`}
-      >
-        <Calendar className="w-4 h-4" />
-        Modo Sexta
-      </Button>
-      
-      <Button
         variant={modoVisualizacao === 'mensal' ? 'default' : 'outline'}
         size="sm"
         onClick={() => setModoVisualizacao('mensal')}
@@ -26,6 +15,16 @@ function SeletorModo() {
       >
         <CalendarDays className="w-4 h-4" />
         Modo Mensal
+      </Button>
+      
+      <Button
+        variant={modoVisualizacao === 'sexta' ? 'default' : 'outline'}
+        size="sm"
+        onClick={() => setModoVisualizacao('sexta')}
+        className={`flex items-center gap-2 px-4 py-2 ${modoVisualizacao === 'sexta' ? 'bg-vibe-purple hover:bg-vibe-purple-dark' : ''}`}
+      >
+        <Calendar className="w-4 h-4" />
+        Modo Sexta
       </Button>
     </div>
   );

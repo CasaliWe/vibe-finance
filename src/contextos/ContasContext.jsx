@@ -23,7 +23,7 @@ export function ContasProvider({ children }) {
   const [rendas, setRendas] = useState([]);
   const [pagamentosContas, setPagamentosContas] = useState([]);
   const [comentariosContas, setComentariosContas] = useState([]);
-  const [modoVisualizacao, setModoVisualizacao] = useState('sexta'); // 'sexta' ou 'mensal'
+  const [modoVisualizacao, setModoVisualizacao] = useState('mensal'); // 'mensal' ou 'sexta'
   const [filtroTipo, setFiltroTipo] = useState('todos'); // 'todos', 'fixo', 'unica', 'parcelado'
   const [termoBusca, setTermoBusca] = useState('');
   const [mesAtual, setMesAtual] = useState(new Date().getMonth());
