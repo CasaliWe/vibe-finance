@@ -4,13 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { 
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter
-} from '@/components/ui/dialog';
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetFooter
+} from '@/components/ui/sheet';
 import { format, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { MessageSquare, Send, Trash2, MessageCircle } from 'lucide-react';
@@ -112,7 +112,7 @@ function ComentariosContaModal({ conta, isOpen, onOpenChange }) {
   const renderTitulo = () => {
     if (!conta) return 'Comentários';
     
-    let titulo = 'Comentários: ';
+    let titulo = '';
     titulo += conta.nome;
     
     if (conta.tipo === 'parcelado' && conta.parcelaAtual && conta.totalParcelas) {
@@ -123,26 +123,26 @@ function ComentariosContaModal({ conta, isOpen, onOpenChange }) {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] flex flex-col">
-        <DialogHeader>
-          <DialogTitle className="text-xl">
+    <Sheet open={isOpen} onOpenChange={onOpenChange}>
+      <SheetContent className="sm:max-w-[500px] flex flex-col">
+        <SheetHeader>
+          <SheetTitle className="text-xl">
             <span className="bg-gradient-to-r from-vibe-purple to-vibe-purple-light bg-clip-text text-transparent flex items-center gap-2">
               <MessageCircle className="h-5 w-5 text-vibe-purple" />
               {renderTitulo()}
             </span>
-          </DialogTitle>
-          <DialogDescription>
+          </SheetTitle>
+          <SheetDescription>
             {conta && (
               <div className="flex flex-col">
-                <span>Adicione notas ou comentários sobre esta conta.</span>
+                <span>Adicione notas a esta conta.</span>
                 <span className="text-sm text-muted-foreground mt-1">
                   {`Vencimento: ${format(new Date(conta.dataVencimento), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}`}
                 </span>
               </div>
             )}
-          </DialogDescription>
-        </DialogHeader>
+          </SheetDescription>
+        </SheetHeader>
         
         <div className="flex-1 py-4">
           <div className="border rounded-lg bg-card/50 mb-4">
@@ -193,7 +193,7 @@ function ComentariosContaModal({ conta, isOpen, onOpenChange }) {
               onChange={(e) => setNovoComentario(e.target.value)}
               className="min-h-[100px] resize-none border-vibe-purple/20 focus-visible:ring-vibe-purple/30"
             />
-            <DialogFooter>
+            <SheetFooter>
               <Button 
                 type="submit" 
                 variant="gradient" 
@@ -203,11 +203,11 @@ function ComentariosContaModal({ conta, isOpen, onOpenChange }) {
                 <Send className="h-4 w-4" />
                 <span>Adicionar Comentário</span>
               </Button>
-            </DialogFooter>
+            </SheetFooter>
           </form>
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }
 

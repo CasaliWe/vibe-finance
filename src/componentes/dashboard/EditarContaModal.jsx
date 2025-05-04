@@ -6,13 +6,13 @@ import { Label } from '@/components/ui/label';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { 
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter
-} from '@/components/ui/dialog';
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetFooter
+} from '@/components/ui/sheet';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { CalendarIcon, Save, ChevronLeft, ChevronRight, Pencil } from 'lucide-react';
@@ -114,16 +114,16 @@ function EditarContaModal({ conta, isOpen, onOpenChange }) {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="text-xl bg-gradient-to-r from-vibe-purple to-vibe-purple-light bg-clip-text text-transparent">
+    <Sheet open={isOpen} onOpenChange={onOpenChange}>
+      <SheetContent className="sm:max-w-[500px]">
+        <SheetHeader>
+          <SheetTitle className="text-xl bg-gradient-to-r from-vibe-purple to-vibe-purple-light bg-clip-text text-transparent">
             {renderTitulo()}
-          </DialogTitle>
-          <DialogDescription>
+          </SheetTitle>
+          <SheetDescription>
             Edite os detalhes da conta abaixo. Apenas os campos permitidos para este tipo de conta podem ser alterados.
-          </DialogDescription>
-        </DialogHeader>
+          </SheetDescription>
+        </SheetHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
           <div className="space-y-2">
@@ -247,15 +247,15 @@ function EditarContaModal({ conta, isOpen, onOpenChange }) {
             </div>
           )}
           
-          <DialogFooter className="pt-4">
+          <SheetFooter className="pt-4">
             <Button type="submit" variant="gradient" className="w-full py-5 flex items-center justify-center gap-2" disabled={isLoading}>
               <Save className="h-4 w-4" />
               <span>Salvar Alterações</span>
             </Button>
-          </DialogFooter>
+          </SheetFooter>
         </form>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }
 
