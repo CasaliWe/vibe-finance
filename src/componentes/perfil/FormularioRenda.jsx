@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useContas } from '../../contextos/ContasContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,7 +12,13 @@ function FormularioRenda() {
   const [tipo, setTipo] = useState('');
   const [dataPagamento, setDataPagamento] = useState('');
   const [enviando, setEnviando] = useState(false);
+  const somRendaRef = useRef(null);
   const { adicionarRenda } = useContas();
+
+  // Inicialização do objeto de áudio
+  useEffect(() => {
+    somRendaRef.current = new Audio('/renda.mp3');
+  }, []);
 
   // Resetar o formulário
   const resetarFormulario = () => {
@@ -68,6 +74,10 @@ function FormularioRenda() {
       const resultado = await adicionarRenda(novaRenda);
       
       if (resultado) {
+        // Reproduzir o som de nova renda adicionada
+        somRendaRef.current.currentTime = 0; // Reinicia o áudio caso esteja tocando
+        somRendaRef.current.play().catch(e => console.error("Erro ao reproduzir áudio:", e));
+        
         toast.success('Fonte de renda adicionada com sucesso!');
         resetarFormulario();
       }

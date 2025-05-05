@@ -5,7 +5,7 @@ import { ptBR } from 'date-fns/locale';
 import { Trash2, CheckCircle2, Circle, Pencil, MessageSquare } from 'lucide-react';
 import { useContas } from '../../contextos/ContasContext';
 import { toast } from 'sonner';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import EditarContaModal from './EditarContaModal';
 import ComentariosContaModal from './ComentariosContaModal';
@@ -17,6 +17,7 @@ function CartaoConta({ conta }) {
   const [modalEditarAberto, setModalEditarAberto] = useState(false);
   const [modalComentariosAberto, setModalComentariosAberto] = useState(false);
   const [possuiComentarios, setPossuiComentarios] = useState(false);
+  const somPagoRef = useRef(null);
   const isMobile = useIsMobile();
   
   useEffect(() => {
@@ -26,6 +27,9 @@ function CartaoConta({ conta }) {
     // Verificar se a conta possui comentários
     const comentarios = obterComentariosDaConta(conta);
     setPossuiComentarios(comentarios.length > 0);
+    
+    // Inicializar o objeto de áudio
+    somPagoRef.current = new Audio('/pago.mp3');
   }, [conta, verificarContaPaga, obterComentariosDaConta]);
   
   const handleRemover = () => {
@@ -35,7 +39,14 @@ function CartaoConta({ conta }) {
   
   const handleAlternarPagamento = () => {
     alternarPagamentoConta(conta);
-    setEstaPaga(!estaPaga);
+    const novoEstado = !estaPaga;
+    setEstaPaga(novoEstado);
+    
+    // Se está marcando como paga, reproduz o som
+    if (novoEstado) {
+      somPagoRef.current.currentTime = 0; // Reinicia o áudio caso esteja tocando
+      somPagoRef.current.play().catch(e => console.error("Erro ao reproduzir áudio:", e));
+    }
   };
 
   const handleEditar = () => {
