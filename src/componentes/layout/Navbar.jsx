@@ -1,8 +1,7 @@
-
 import { useState } from 'react';
 import { useAuth } from '../../contextos/AuthContext';
 import BotaoAlternarTema from '../ui/BotaoAlternarTema';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { User, LogOut, Home, LayoutDashboard, Menu, X } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -11,10 +10,15 @@ function Navbar() {
   const { autenticado, fazerLogout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+  const location = useLocation();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(prev => !prev);
   };
+
+  // Verificar se estamos na página Dashboard ou Perfil
+  const estaNaPaginaDashboard = location.pathname === '/dashboard';
+  const estaNaPaginaPerfil = location.pathname === '/perfil';
 
   return (
     <nav className="absolute top-[0px] w-full z-50 bg-vibe-purple shadow-md">
@@ -42,18 +46,24 @@ function Navbar() {
           <div className="flex items-center gap-3">
             {autenticado ? (
               <>
-                <Link to="/dashboard">
-                  <Button variant="ghost" className="h-10 px-4 py-2 text-white hover:bg-white/20 flex items-center gap-2">
-                    <LayoutDashboard className="h-5 w-5" />
-                    <span>Dashboard</span>
-                  </Button>
-                </Link>
-                <Link to="/perfil">
-                  <Button variant="ghost" className="h-10 px-4 py-2 text-white hover:bg-white/20 flex items-center gap-2">
-                    <User className="h-5 w-5" />
-                    <span>Perfil</span>
-                  </Button>
-                </Link>
+                {!estaNaPaginaDashboard && (
+                  <Link to="/dashboard">
+                    <Button variant="ghost" className="h-10 px-4 py-2 text-white hover:bg-white/20 flex items-center gap-2">
+                      <LayoutDashboard className="h-5 w-5" />
+                      <span>Dashboard</span>
+                    </Button>
+                  </Link>
+                )}
+                
+                {!estaNaPaginaPerfil && (
+                  <Link to="/perfil">
+                    <Button variant="ghost" className="h-10 px-4 py-2 text-white hover:bg-white/20 flex items-center gap-2">
+                      <User className="h-5 w-5" />
+                      <span>Perfil</span>
+                    </Button>
+                  </Link>
+                )}
+                
                 <Button 
                   variant="ghost" 
                   className="h-10 px-4 py-2 text-white hover:bg-white/20 flex items-center gap-2" 
@@ -82,18 +92,24 @@ function Navbar() {
           <div className="flex flex-col py-3 px-4 space-y-2">
             {autenticado ? (
               <>
-                <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start h-12 px-4 py-2 text-white hover:bg-white/20 flex items-center gap-3">
-                    <LayoutDashboard className="h-5 w-5" />
-                    <span>Dashboard</span>
-                  </Button>
-                </Link>
-                <Link to="/perfil" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start h-12 px-4 py-2 text-white hover:bg-white/20 flex items-center gap-3">
-                    <User className="h-5 w-5" />
-                    <span>Perfil</span>
-                  </Button>
-                </Link>
+                {!estaNaPaginaDashboard && (
+                  <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start h-12 px-4 py-2 text-white hover:bg-white/20 flex items-center gap-3">
+                      <LayoutDashboard className="h-5 w-5" />
+                      <span>Dashboard</span>
+                    </Button>
+                  </Link>
+                )}
+                
+                {!estaNaPaginaPerfil && (
+                  <Link to="/perfil" onClick={() => setMobileMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start h-12 px-4 py-2 text-white hover:bg-white/20 flex items-center gap-3">
+                      <User className="h-5 w-5" />
+                      <span>Perfil</span>
+                    </Button>
+                  </Link>
+                )}
+                
                 <Button 
                   variant="ghost" 
                   className="w-full justify-start h-12 px-4 py-2 text-white hover:bg-white/20 flex items-center gap-3" 
